@@ -12,40 +12,33 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.model.model;
-import com.example.demo.service.service;
+
+import com.example.demo.model.personal;
+import com.example.demo.service.personalService;
 
 @CrossOrigin
 @RestController
-public class Controller {
+public class PersonalController {
 	@Autowired
-	service s;
+	personalService s;
 	
-	@GetMapping("/getClothes")
-	public List <model>showDetails(){
+	@GetMapping("/getPersonal")
+	public List <personal>showDetails(){
 		return s.getDetails();
 	}
-	@PostMapping("/postClothes")
-	public String addDetails(@RequestBody model m) {
+	@PostMapping("/postPersonal")
+	public String addDetails(@RequestBody personal m) {
 		s.add(m);
-		return "Added product "+m.getId()+ " with brand "+m.getBrand()+" worth "+m.getPrice();
+		return "Added Client "+m.getId();
 	}
-	@PutMapping("/updateClothes")
-	public model update(@RequestBody model m) {
+	@PutMapping("/updatePersonal")
+	public personal update(@RequestBody personal m) {
 		return s.updateDetails(m);
 	}
-	@DeleteMapping("/deleteClothes/{id}")
+	@DeleteMapping("/deletePersonal/{id}")
 	public String deleteInfo(@PathVariable("id") int id){
 		s.deleteDetails(id);
 		return "Deleted Cloth from store";
 	}
 	
-	@GetMapping("/sortClothes/{field}")
-	public List<model> getWithSort(@PathVariable String field){
-		return s.getSorted(field);
-	}
-	@GetMapping("Clothes/{offset}/{pageSize}")
-	public List<model> productsWithPagination(@PathVariable int offset,@PathVariable int pageSize){
-		return s.getWithPagination(offset,pageSize);
-	}
 }
